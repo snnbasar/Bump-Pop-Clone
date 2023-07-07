@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: d923d357b2822cf44b2b75f8823a26f5
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - AvantGarde
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: d0cfabc443f0d9c4f9c7fa32067d2e8c, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

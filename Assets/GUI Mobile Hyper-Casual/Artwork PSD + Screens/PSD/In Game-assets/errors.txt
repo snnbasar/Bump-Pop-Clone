@@ -1,0 +1,25 @@
+[2021-5-9 01:57:32] layer "+150": Expected Either a default asset specification or a layer asset specification but "+" found.
+[2021-5-9 01:57:32] layer "Barre level.png copie": Expected end of input but "c" found.
+[2021-5-9 01:57:32] layer "Barre de progression 2.png copie": Expected end of input but "c" found.
+[2021-5-9 01:57:32] layer "Barre de progression 2.png": Duplicate path: Barre de progression 2.png
+[2021-5-9 01:57:32] layer "Barre de progression 2.png copie": Expected end of input but "c" found.
+[2021-5-9 01:57:32] layer "Barre de progression 2.png": Duplicate path: Barre de progression 2.png
+[2021-5-9 01:57:32] layer "Barre de progression 2.png copie": Expected end of input but "c" found.
+[2021-5-9 01:57:32] layer "Barre de progression 2.png": Duplicate path: Barre de progression 2.png
+[2021-5-9 01:57:32] layer "Barre de progression 2.png copie": Expected end of input but "c" found.
+[2021-5-9 01:57:32] layer "Level carré.png": Duplicate path: Level carré.png
+[2021-5-9 01:57:32] layer "Level carré.png": Duplicate path: Level carré.png
+[2021-5-9 01:57:32] layer "Level carré.png": Duplicate path: Level carré.png
+[2021-5-9 01:57:32] layer "Level carré.png": Duplicate path: Level carré.png
+[2021-5-9 01:57:32] layer "+50": Expected Either a default asset specification or a layer asset specification but "+" found.
+[2021-5-9 01:57:32] layer "+100": Expected Either a default asset specification or a layer asset specification but "+" found.
+[2021-5-9 01:57:32] layer "+200": Expected Either a default asset specification or a layer asset specification but "+" found.
+[2021-5-9 01:57:32] layer "+500": Expected Either a default asset specification or a layer asset specification but "+" found.
+[2021-5-9 01:57:32] layer "+1 000": Expected Either a default asset specification or a layer asset specification but "+" found.
+[2021-5-9 01:57:32] layer "+Coins": Expected Either a default asset specification or a layer asset specification but "+" found.
+[2021-5-9 01:57:32] layer "+100": Expected Either a default asset specification or a layer asset specification but "+" found.
+[2021-5-9 01:57:32] layer "+50": Expected Either a default asset specification or a layer asset specification but "+" found.
+[2021-5-9 01:57:32] layer "+20": Expected Either a default asset specification or a layer asset specification but "+" found.
+[2021-5-9 01:57:32] layer "+10": Expected Either a default asset specification or a layer asset specification but "+" found.
+[2021-5-9 01:57:32] layer "+5": Expected Either a default asset specification or a layer asset specification but "+" found.
+[2021-5-9 01:57:32] layer "+ Gem": Expected Either a default asset specification or a layer asset specification but "+" found.

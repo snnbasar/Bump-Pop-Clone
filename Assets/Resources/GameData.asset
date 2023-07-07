@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdd1cd5f75b2d144eb1fb38c26370b59, type: 3}
+  m_Name: GameData
+  m_EditorClassIdentifier: 
+  timeScale: 1
+  targetFPS: 60
+  firstLevelAfterFinish: 0
+  ballPrefab: {fileID: 9115001664964032808, guid: 62f05a300c6163b488d0586ca68da7bb, type: 3}
