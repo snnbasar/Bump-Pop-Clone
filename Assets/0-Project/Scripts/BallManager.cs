@@ -8,15 +8,22 @@ public class BallManager : MonoBehaviour
     public static BallManager Instance;
 
     public Ball mainBall;
-    public float ballThrowForce = 10f;
-    public float forwardMultiplierOnBallSpawn = 35f;
-    public bool canMove;
-    public bool isAbleToMove;
-    public float rotateSpeed = 10f;
+    public float ballThrowForce = 10f; // Player throw force
+    public float forwardMultiplierOnBallSpawn = 35f; // Force for balls that newly spawned
+    public bool canMove; // Global move bool
+    public bool isAbleToMove; // Local move bool
+    public float rotateSpeed = 10f; // MainBall's rotate speed for player
 
-    private List<Ball> interactedBalls = new List<Ball>();
-    public List<Ball> ballsOnLevelDesign = new List<Ball>();
-    public Color[] colors;
+    private List<Ball> interactedBalls = new List<Ball>(); // A list for keep tracking balls we interacted so we can check for camera and next move
+    public List<Ball> ballsOnLevelDesign = new List<Ball>(); // A list for keep tracking balls that can spawn new balls
+    public Color[] colors; // Available colors
+
+    private int _totalBallSpawnCount;
+    private int totalBallSpawnCount { get => _totalBallSpawnCount; set
+        {
+            _totalBallSpawnCount = value;
+            UIManager.Instance.UpdateBallText(_totalBallSpawnCount);
+        } }
 
     Quaternion lookRot;
     Vector2 lastMousePos;
@@ -28,8 +35,15 @@ public class BallManager : MonoBehaviour
 
     private IEnumerator Start()
     {
+        //Set Main ball
+        mainBall = LevelManager.Instance.currentLevel.mainBall;
+        GameManager.Instance.camera_CM.Follow = mainBall.transform;
+        GameManager.Instance.camera_CM.LookAt = mainBall.transform;
+
         isAbleToMove = true;
         AddMeToInteractedBalls(mainBall);
+
+        //Wait 2 frame for every ball to register itself to ballsOnLevelDesign list so we can remove mainBall
         yield return new WaitForFixedUpdate();
         yield return new WaitForFixedUpdate();
         ballsOnLevelDesign.Remove(mainBall);
@@ -46,7 +60,7 @@ public class BallManager : MonoBehaviour
         if (!canMove)
             return;
 
-        if (FinalManager.Instance.isFinalTriggered)
+        if (FinalManager.Instance && FinalManager.Instance.isFinalTriggered)
             return;
 
         if (isAbleToMove)
@@ -62,14 +76,7 @@ public class BallManager : MonoBehaviour
 
     private void HandleControls()
     {
-        if (Input.GetKey(KeyCode.A))
-        {
-            lookRot.eulerAngles += Vector3.down * rotateSpeed * Time.deltaTime;
-        }
-        else if (Input.GetKey(KeyCode.D))
-        {
-            lookRot.eulerAngles += Vector3.up * rotateSpeed * Time.deltaTime;
-        }
+        
         if (Input.GetMouseButtonDown(0))
         {
             lastMousePos = Input.mousePosition;
@@ -81,12 +88,12 @@ public class BallManager : MonoBehaviour
             lookRot.eulerAngles += deltaPos.x * Vector3.up * rotateSpeed * Time.deltaTime;
             lastMousePos = curMousePos;
         }
+        // Rotate main ball according to player's input
         mainBall.transform.rotation = Quaternion.Slerp(mainBall.transform.rotation, lookRot, Time.deltaTime * rotateSpeed);
-        //Vector3 velocity = Vector3.zero;
-        //mainBall.transform.rotation = Quaternion.Euler(Vector3.SmoothDamp(mainBall.transform.rotation.eulerAngles, lookRot.eulerAngles, ref velocity, 0.3f));
 
-        if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonUp(0))
+        if (Input.GetMouseButtonUp(0))
         {
+            // Throw main ball and start movement
             mainBall.Init(mainBall.transform.forward * ballThrowForce, false);
             OnMoveStarted();
         }
@@ -100,13 +107,13 @@ public class BallManager : MonoBehaviour
             return;
 
         waitTimer += Time.deltaTime;
-        //if(mainBall.GetVelocity().sqrMagnitude <= 0.01f && waitTimer >= waitTime)
         if(CheckIfEveryBallStopped() && waitTimer >= waitTime)
         {
             OnMoveEnded();
             waitTimer = 0;
         }
     }
+    // Function to check if there is any ball still moving
     private bool CheckIfEveryBallStopped()
     {
         bool sts = true;
@@ -141,6 +148,7 @@ public class BallManager : MonoBehaviour
         isAbleToMove = true;
         ShowTargetImages(true);
 
+        // Check if we did not hit any ball and final is not triggered
         if(beforeMoveBallSpawnTriggeredCount == curBallSpawnTriggeredCount && !FinalManager.Instance.isFinalTriggered)
         {
             //GameOver
@@ -155,10 +163,12 @@ public class BallManager : MonoBehaviour
         int ballSpawnCount = GameManager.Instance.ballSpawnCount;
         for (int i = 0; i < ballSpawnCount; i++)
         {
+            //Get Random Pos
             float randomMultiplier = 0.5f;
             Vector3 randomPos = new Vector3(Random.Range(-1, 1), 0, Random.Range(-1, 1));
             randomPos *= randomMultiplier;
 
+            //Create ball Instance, set color and initialize it
             GameObject ballGO = GameManager.Instance.ballPool.PullGameObject(refBall.transform.position + randomPos);
             Ball ball = ballGO.GetComponent<Ball>();
             ball.amIMultiplied = true;
@@ -166,9 +176,13 @@ public class BallManager : MonoBehaviour
 
             AddMeToInteractedBalls(ball);
             AddForceToSpawnedBalls(refBall, ball);
-
+            
+            //Give income for spawned balls
             GiveIncome(ball);
+
+            totalBallSpawnCount++;
         }
+        //Give income for ball that we hit
         GiveIncome(refBall);
 
         void GiveIncome(Ball ball)
@@ -176,12 +190,6 @@ public class BallManager : MonoBehaviour
             ball.DoMoneyAnim(GameManager.Instance.oneBallIncome);
             GameManager.Instance.MoneyAdd(GameManager.Instance.oneBallIncome);
         }
-    }
-
-    void GiveIncome(Ball refBall)
-    {
-        refBall.DoMoneyAnim(10);
-        GameManager.Instance.MoneyAdd(10);
     }
 
     private void AddForceToSpawnedBalls(Ball refBall, Ball ball)
@@ -196,13 +204,6 @@ public class BallManager : MonoBehaviour
         ball.GetRigidbody().velocity = velo;
     }
 
-    public void AddMeToInteractedBalls(Ball ball)
-    {
-        if (!interactedBalls.Contains(ball))
-            interactedBalls.Add(ball);
-    }
-    public void RemoveMeFromInteractedBalls(Ball ball) => interactedBalls.Remove(ball);
-
 
 
     private void GetMainBall()
@@ -216,6 +217,7 @@ public class BallManager : MonoBehaviour
             GameManager.Instance.SetCameraFollow(mainBall.transform);
         }
     }
+    //Function to find the farest ball in every interacted balls
     private Ball GetFarestBall()
     {
         float zMax = 0;
@@ -243,6 +245,15 @@ public class BallManager : MonoBehaviour
                 x.ShowTargetImage(false);
         });
     }
+
+
+    public void AddMeToInteractedBalls(Ball ball)
+    {
+        if (!interactedBalls.Contains(ball))
+            interactedBalls.Add(ball);
+    }
+
+    public void RemoveMeFromInteractedBalls(Ball ball) => interactedBalls.Remove(ball);
 
     public void SetCanMove(bool sts) => canMove = sts;
 }

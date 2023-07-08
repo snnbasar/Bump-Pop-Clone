@@ -3,5 +3,7 @@ using UnityEngine;
 
 public class LevelSettings : MonoBehaviour
 {
-
+    public Ball mainBall;
+    public Material[] levelMaterials;
+    
 }

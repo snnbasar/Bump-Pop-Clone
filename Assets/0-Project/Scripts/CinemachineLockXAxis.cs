@@ -23,4 +23,5 @@ public class CinemachineLockXAxis : CinemachineExtension
             state.RawPosition = pos;
         }
     }
+
 }

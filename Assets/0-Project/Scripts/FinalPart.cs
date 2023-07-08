@@ -39,6 +39,7 @@ public class FinalPart : MonoBehaviour
         ballTrigger.OnBallEnterTrigger += BallTrigger_OnBallEnterTrigger;
         UpdateScoreText(maxScore);
 
+        //Change Chain color
         ChangeMyColor(BallManager.Instance.colors.GetRandomItem());
     }
     private void Update()
@@ -66,6 +67,7 @@ public class FinalPart : MonoBehaviour
             return;
         enteredBalls.Add(ball);
         curScore++;
+        waitTimer = 0;
     }
 
     private void CheckIfBallsCanPass()
@@ -73,18 +75,26 @@ public class FinalPart : MonoBehaviour
         if (_curScore < maxScore)
             return;
         BreakChain();
-        FinalManager.Instance.totalScore = maxScore;
     }
 
-
-    [Button]
-    public void BreakChain()
+    private void BreakChain()
     {
+        FinalManager.Instance.totalScore = maxScore;
         isChainBreaked = true;
         col.SetActive(false);
         this.gameObject.SetLayer(9, true);
         GameManager.Instance.ShakeCam();
 
+        BreakChainVisual();
+
+        float force = 10f;
+        enteredBalls.ForEach(x => x.GetRigidbody().AddForce(FinalManager.Instance.transform.forward * force, ForceMode.Impulse));
+    }
+
+    [Button]
+    public void BreakChainVisual()
+    {
+        
         List<Transform> bonesToGiveForce = new List<Transform>();
         for (int i = 0; i < chain.transform.GetChild(0).childCount; i++)
         {

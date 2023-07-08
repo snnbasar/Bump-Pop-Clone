@@ -24,6 +24,8 @@ public class LevelManager : MonoBehaviour
         levelGO.SetActive(true);
         this.currentLevel = levelGO.GetComponent<LevelSettings>();
     }
+
+    
     [Button]
     public void GameOver()
     {

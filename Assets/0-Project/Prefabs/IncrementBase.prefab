@@ -534,16 +534,16 @@ MonoBehaviour:
   m_EffectFactor: 0.5
   m_Width: 0.25
   m_Rotation: 135
-  m_Softness: 1
-  m_Brightness: 1
-  m_Gloss: 1
+  m_Softness: 0.814
+  m_Brightness: 0.843
+  m_Gloss: 0.861
   m_EffectArea: 0
   m_Player:
-    play: 0
+    play: 1
     initialPlayDelay: 0
     duration: 1
-    loop: 0
-    loopDelay: 0
+    loop: 1
+    loopDelay: 1
     updateMode: 0
 --- !u!225 &8267073403936705073
 CanvasGroup:

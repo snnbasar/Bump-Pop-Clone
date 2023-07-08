@@ -62,6 +62,8 @@ public class Projection : MonoBehaviour {
 
     public void HandleSimilation(Ball mainBall, float ballThrowForce)
     {
+        if (!BallManager.Instance.isAbleToMove)
+            return;
         simulationTimer += Time.deltaTime;
         if (simulationTimer >= simulationTime)
         {
@@ -71,17 +73,6 @@ public class Projection : MonoBehaviour {
     }
 
     private void SimulateTrajectory(Ball ballPrefab, Vector3 pos, Vector3 velocity) {
-        //if (!ghostObj)
-        //{
-        //    ghostObj = Instantiate(ballPrefab, pos, Quaternion.identity);
-        //    SceneManager.MoveGameObjectToScene(ghostObj.gameObject, _simulationScene);
-        //}
-        //else
-        //{
-        //    ghostObj.gameObject.SetActive(true);
-        //    ghostObj.transform.position = pos;
-        //    ghostObj.ResetVelocity();
-        //}
 
         ghostObj = Instantiate(ballPrefab, pos, Quaternion.identity);
         SceneManager.MoveGameObjectToScene(ghostObj.gameObject, _simulationScene);
@@ -96,6 +87,5 @@ public class Projection : MonoBehaviour {
         }
 
         Destroy(ghostObj.gameObject);
-        //ghostObj.gameObject.SetActive(false);
     }
 }

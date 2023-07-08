@@ -57,8 +57,8 @@ public abstract class Buyable : Levelable
         if (!CheckCanUpdateLevel())
             return;
         UpdateMyMoney();
-        UpdateMyPrice();
         UpdateMyLevel();
+        UpdateMyPrice();
     }
 
     public bool CheckDoIHaveEnoughMoney()
@@ -76,4 +76,16 @@ public abstract class Buyable : Levelable
         GameManager.Instance.MoneyAdd(-myPrice);
     }
 
+    public override void ManualSetLevel(int level)
+    {
+        if (!CheckCanUpdateLevel())
+            return;
+
+        for (int i = 0; i < level; i++)
+        {
+            UpdateMyLevel();
+            UpdateMyPrice();
+
+        }
+    }
 }

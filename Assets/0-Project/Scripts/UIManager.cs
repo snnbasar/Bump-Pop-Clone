@@ -27,6 +27,7 @@ public class UIManager : MonoBehaviour
 
     [Header("Game Area")]
     public GameObject incrementalMenu;
+    public TextMeshProUGUI ballText;
 
     private void Awake()
     {
@@ -46,10 +47,6 @@ public class UIManager : MonoBehaviour
 
     public void OpenWinPanel()
     {
-        //levelProgressArea.SetActive(false);
-
-        //winEmoji.sprite = winSprites[Random.Range(0, winSprites.Length)];
-
         winPanel.SetActive(true);
         winPanel.GetComponent<CanvasGroup>().alpha = 0;
         winPanel.GetComponent<CanvasGroup>().DOFade(1f, 1f).SetUpdate(true);
@@ -57,10 +54,6 @@ public class UIManager : MonoBehaviour
 
     public void OpenLosePanel()
     {
-        //levelProgressArea.SetActive(false);
-
-        //loseEmoji.sprite = loseSprites[Random.Range(0, loseSprites.Length)];
-
         losePanel.SetActive(true);
         losePanel.GetComponent<CanvasGroup>().alpha = 0;
         losePanel.GetComponent<CanvasGroup>().DOFade(1f, 1f).SetUpdate(true);
@@ -80,6 +73,7 @@ public class UIManager : MonoBehaviour
         AnimateScaleOfMoney();
     }
     public void UpdateScoreText(int score) => scoreText.text = score.ToString();
+    public void UpdateBallText(int ball) => ballText.text = ball.ToString();
 
     public void AnimateScaleOfMoney()
     {

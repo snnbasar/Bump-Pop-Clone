@@ -17,13 +17,14 @@ public class BuyThings : Buyable
     private void Awake()
     {
         button = GetComponent<Button>();
-        SetText();
+        SetTexts();
         uishiny = GetComponent<UIShiny>();
     }
     private void Start()
     {
         int level = SaveManager.LoadFromDictionary(myId, "buyThingsSave", 0);
         ManualSetLevel(level);
+        UpdateMyPrice();
     }
 
 
@@ -48,21 +49,25 @@ public class BuyThings : Buyable
             GameManager.Instance.ballSpawnCount = 5 + currentLevel;
         }
         SaveManager.SaveToDictionary(myId, currentLevel, "buyThingsSave");
-        SetText();
+        SetTexts();
 
     }
 
     public override void UpdateMyPrice()
     {
-        base.UpdateMyPrice();
-
+        //myPrice = myId == 0 ? EconomyManager.instance.getMoreBallsPrice(currentLevel) : EconomyManager.instance.getIncomePrice(currentLevel);
+        if (myId == 0)
+            myPrice = EconomyManager.instance.getMoreBallsPrice(currentLevel);
+        else if(myId == 1)
+            myPrice = EconomyManager.instance.getIncomePrice(currentLevel);
+        SetTexts();
     }
 
-    private void SetText()
+    private void SetTexts()
     {
         if (CheckCanUpdateLevel())
         {
-            costText.text = "$" + myPrice;
+            costText.text = "$" + Extensions.KMBMaker(myPrice);
             levelText.text = "LEVEL " + (currentLevel + 1);
         }
         else

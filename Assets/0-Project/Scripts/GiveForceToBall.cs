@@ -20,13 +20,19 @@ public class GiveForceToBall : MonoBehaviour
     {
         if (forceMode == ForceMode.Acceleration || forceMode == ForceMode.Force)
             return;
-        ball.GetRigidbody().AddForce((lookDirection ? transform.forward : forceDirection) * force, forceMode);
+        GiveForce(ball);
     }
+
 
     private void OnBallStayTrigger(Ball ball)
     {
         if (forceMode == ForceMode.Impulse || forceMode == ForceMode.VelocityChange)
             return;
+        GiveForce(ball);
+    }
+
+    private void GiveForce(Ball ball)
+    {
         ball.GetRigidbody().AddForce((lookDirection ? transform.forward : forceDirection) * force, forceMode);
     }
 }

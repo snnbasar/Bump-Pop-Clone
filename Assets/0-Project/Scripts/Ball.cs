@@ -29,7 +29,16 @@ public class Ball : MonoBehaviour {
         BallManager.Instance.ballsOnLevelDesign.Add(this);
         ChangeMyColor(BallManager.Instance.colors.GetRandomItem());
     }
-
+    private void Update()
+    {
+        if (GameManager.Instance._gameState != GameManager.GameState.Started)
+            return;
+        if (transform.position.y <= -10f && !FinalManager.Instance.isFinalTriggered)
+        {
+            BallManager.Instance.RemoveMeFromInteractedBalls(this);
+            gameObject.SetActive(false); // Return to the pool
+        }
+    }
     public void Init(Vector3 velocity, bool isGhost) {
         _isGhost = isGhost;
         _rb.AddForce(velocity, ForceMode.Impulse);
@@ -49,7 +58,7 @@ public class Ball : MonoBehaviour {
         amIMultiplied = true;
         ball.amIMultiplied = true;
 
-        Ball refBall = BallManager.Instance.ballsOnLevelDesign.Contains(this) ? this : ball; // To find the ball that can multiply
+        Ball refBall = BallManager.Instance.ballsOnLevelDesign.Contains(this) ? this : ball; // 2 collisions happen on the same frame. This is for find the ball that can multiply
 
         //Set Lists
         BallManager.Instance.ballsOnLevelDesign.Remove(this);
@@ -64,7 +73,6 @@ public class Ball : MonoBehaviour {
 
     public void DoMoneyAnim(int price)
     {
-        //TextMeshProUGUI text = Instantiate(_lootTextPrefab, pos, _lootTextPrefab.transform.rotation, _lootTextPrefab.transform.parent);
         TextMeshProUGUI text = _moneyText;
         text.gameObject.SetActive(true);
         text.text = price > 0 ? "" + price : price.ToString();
@@ -78,7 +86,6 @@ public class Ball : MonoBehaviour {
         seq.Append(text.rectTransform.DOLocalMoveY(offset, time).SetRelative(true));
         seq.AppendInterval(time / 2);
         seq.Join(cG.DOFade(0, time));
-        //seq.OnComplete(() => Destroy(text.gameObject));
         seq.OnComplete(() => text.gameObject.SetActive(false));
     }
 

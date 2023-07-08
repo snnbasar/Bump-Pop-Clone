@@ -9,6 +9,6 @@ PhysicMaterial:
   m_Name: Ice
   dynamicFriction: 0
   staticFriction: 0
-  bounciness: 0
+  bounciness: 0.91
   frictionCombine: 1
-  bounceCombine: 0
+  bounceCombine: 3

@@ -51,7 +51,7 @@ public class FinalManager : MonoBehaviour
         lookRot.z = 0f;
 
         CinemachineTransposer transposer = cm.GetCinemachineComponent<CinemachineTransposer>();
-        DOTween.To(() => transposer.m_FollowOffset.y, x => transposer.m_FollowOffset.y = x, 10f, 1f);
+        DOTween.To(() => transposer.m_FollowOffset.y, x => transposer.m_FollowOffset.y = x, 25f, 1f);
         DOTween.To(() => transposer.m_YawDamping, x => transposer.m_YawDamping = x, 3f, 1f);
         //transposer.m_FollowOffset.y = 10f;
         //transposer.m_YawDamping = 3f;
